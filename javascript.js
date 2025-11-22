@@ -38,6 +38,7 @@ function clickOperator(op) {
         }
         else {
             result = operate(num1, num2, operator);
+            topDisplay.textContent = bottomDisplay.textContent;
             bottomDisplay.textContent = roundResultForDisplay(result);
             num1 = "";
             num2 = "";
@@ -50,19 +51,20 @@ function clickOperator(op) {
         if (result != 0) { // an operation just occured, we want to use the result as num1
             num1 = result;
             operator = op;
-            addOperatorDisplay(op);
+            addOperatorDisplay(op, "bottom");
         }
         else if (operator != "") { // i
             
             result = operate(num1, num2, operator);
+            topDisplay.textContent = bottomDisplay.textContent;
             bottomDisplay.textContent = roundResultForDisplay(result);
             num1 = result;
             num2 = "";
             operator = op;
-            addOperatorDisplay(op);
+            addOperatorDisplay(op, "bottom");
         }
         else { //
-            addOperatorDisplay(op);
+            addOperatorDisplay(op, "bottom");
             operator = op;
         }
         lastButton.push("operator");
@@ -76,15 +78,14 @@ function clickNumber(num) {
     if (operator == "") { //first number of operation
         result = 0;
         if (operationOver && num1 == "") { //Clears the display for new operation
-            bottomDisplay.textContent = "0";
-            if (num == ".") {
-                topDisplay.textContent = "0";
-            }
-            else topDisplay.textContent = ""; 
+            //if (num == ".") {
+            //    bottomDisplay.textContent = "0";
+            //}
+            //else bottomDisplay.textContent = ""; 
         }
         if (num == "point") { //case of first button of first op is "."
             num = ".";
-            topDisplay.textContent = "0"; // avoid 0 to be erased
+            //bottomDisplay.textContent = "0"; // avoid 0 to be erased
         }
         num1 = addNumber(num, num1); 
         lastButton.push("num1");
@@ -93,7 +94,10 @@ function clickNumber(num) {
         num2 = addNumber(num, num2);
         lastButton.push("num2");
     }
-    topDisplay.textContent += num;
+    if (bottomDisplay.textContent == "0") {
+        bottomDisplay.textContent = num;
+    }
+    else bottomDisplay.textContent += num;
 }
 
 // Add the digit clicked to the number: replaces number by digit if number = 0,
@@ -140,21 +144,41 @@ function clickClear(id) {
     }
 }
 
-function addOperatorDisplay(op) {
-    switch(op) {
-        case "add":
-            topDisplay.textContent += "+";
-            break;
-        case "sub":
-            topDisplay.textContent += "-";
-            break;
-        case "mult":
-            topDisplay.textContent += "x";
-            break;
-        case "div":
-            topDisplay.textContent += "/";
-            break;
+function addOperatorDisplay(op, display) {
+    if (display == "top"){
+        switch(op) {
+            case "add":
+                topDisplay.textContent += "+";
+                break;
+            case "sub":
+                topDisplay.textContent += "-";
+                break;
+            case "mult":
+                topDisplay.textContent += "x";
+                break;
+            case "div":
+                topDisplay.textContent += "/";
+                break;
+        }
     }
+    else if (display == "bottom"){
+        switch(op) {
+            case "add":
+                bottomDisplay.textContent += "+";
+                break;
+            case "sub":
+                bottomDisplay.textContent += "-";
+                break;
+            case "mult":
+                bottomDisplay.textContent += "x";
+                break;
+            case "div":
+                bottomDisplay.textContent += "/";
+                break;
+        }
+
+    }
+
 }
 
 function roundResultForDisplay(result) {
