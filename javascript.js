@@ -1,12 +1,12 @@
 // Variables to save data of the operation.
 // We use strings to add new numbers to num1 and num2 (only convert it to Number
 // in clickOperator)
-let num1 = "0";
+let num1 = "";
 let operator = "";
-let num2 = "0";
+let num2 = "";
 let operationOver = false;
 let result = 0;
-let lastButton = ""
+let lastButton = [];
 
 // Create arrays with all operators and numbers buttons
 //const operators = Array.from(document.querySelectorAll(".operator"));
@@ -35,14 +35,24 @@ function clickOperator(op) {
     if (op == "equal"){
         result = operate(num1, num2, operator);
         bottomDisplay.textContent = result;
-        num1 = "0";
-        num2 = "0";
+        num1 = "";
+        num2 = "";
         operator = "";
         operationOver = true;
     }
     else {
+        console.log(num1, num2, operator, result);
         if (result != 0) { // an operation just occured, we want to use the result as num1
             num1 = result;
+            operator = op;
+            addOperatorDisplay(op);
+        }
+        else if (operator != "") { // i
+            
+            result = operate(num1, num2, operator);
+            bottomDisplay.textContent = result;
+            num1 = result;
+            num2 = "";
             operator = op;
             addOperatorDisplay(op);
         }
@@ -50,15 +60,17 @@ function clickOperator(op) {
             addOperatorDisplay(op);
             operator = op;
         }
-        lastButton = "operator";
+        lastButton.push("operator");
     }
+console.log(num1, num2, operator, result);    
 }
 
 // Case the button clicked is a number (uses newOperation to decide if the number
 // should be added to num1 or num2)
 function clickNumber(num) {
     if (operator == "") { //first number of operation
-        if (operationOver && num1 == "0") { //Clears the display for new operation
+        result = 0;
+        if (operationOver && num1 == "") { //Clears the display for new operation
             bottomDisplay.textContent = "0";
             if (num == ".") {
                 topDisplay.textContent = "0";
@@ -70,11 +82,11 @@ function clickNumber(num) {
             topDisplay.textContent = "0"; // avoid 0 to be erased
         }
         num1 = addNumber(num, num1); 
-        lastButton = "num1";
+        lastButton.push("num1");
     }
     else {
         num2 = addNumber(num, num2);
-        lastButton = "num2";
+        lastButton.push("num2");
     }
     topDisplay.textContent += num;
 }
@@ -82,7 +94,7 @@ function clickNumber(num) {
 // Add the digit clicked to the number: replaces number by digit if number = 0,
 // else concatenates the digit to number.
 function addNumber(digit, number) {
-    if (number == "0") {
+    if (number == "") {
         if (digit == ".") {
             return "0."
         }
@@ -102,12 +114,14 @@ function clickClear(id) {
         result = "";
         lastButton = "";
         operationOver = false;
+        lastButton = [];
         topDisplay.textContent = "";
         bottomDisplay.textContent = 0;
     }
     if (id == "c") {
         topDisplay.textContent = topDisplay.textContent.slice(0, topDisplay.textContent.length - 1);
-        switch (lastButton) {
+        let last = lastButton.pop();
+        switch (last) {
             case ("num1"):
                 num1 = num1.slice(0, num1.length -1);               
                 break;
