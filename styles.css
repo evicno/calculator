@@ -1,15 +1,21 @@
+
+
 body {
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
+    font-family: "Oxanium", sans-serif;
+    background-color: #FFF8D4;
 }
 .container {
     width: 364px;
     height: 480px;
+    margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-direction: column;
+    background-color: #313647;
 }
 .container,
 .screen,
@@ -25,9 +31,7 @@ button {
     margin: 10px;
     text-align: right;
     padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    background-color: rgb(213, 215, 216);
 }
 
 .buttons {
@@ -35,13 +39,16 @@ button {
     margin: 10px;
     padding: 5px;
     padding-top: 16px;
-
+    background-color: #435663;
 }
 
 button {
     height: 70px;
     width: 70px;
     margin: 5px;
+    font-family: "Oxanium", sans-serif;
+    font-size: 20px;
+    background-color: #A3B087;
 }
 
 .row {
@@ -49,12 +56,18 @@ button {
     justify-content: center;
 }
 
-p {
+.display {
     height: 25px;
     margin: 0;
     
 }
 
 #bottom {
-    font-size: 30px;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+#top {
+    height: 20px;
+    font-size: 20px;
 }
