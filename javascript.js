@@ -38,7 +38,7 @@ function clickOperator(op) {
         }
         else {
             result = operate(num1, num2, operator);
-            bottomDisplay.textContent = result.toString().slice(0, 10);
+            bottomDisplay.textContent = roundResultForDisplay(result);
             num1 = "";
             num2 = "";
             operator = "";
@@ -55,7 +55,7 @@ function clickOperator(op) {
         else if (operator != "") { // i
             
             result = operate(num1, num2, operator);
-            bottomDisplay.textContent = result.toString().slice(0, 10);
+            bottomDisplay.textContent = roundResultForDisplay(result);
             num1 = result;
             num2 = "";
             operator = op;
@@ -154,6 +154,21 @@ function addOperatorDisplay(op) {
         case "div":
             topDisplay.textContent += "/";
             break;
+    }
+}
+
+function roundResultForDisplay(result) {
+    const maxLength = 12;
+    const resultLength = result.toString().length;
+    if (resultLength <= maxLength) {
+        return result;
+    }
+    else {
+        const lengthInteger = Math.floor(result).toString().length;
+        const lengthDecimal = maxLength - lengthInteger;
+        // Get a round value to lengthDecimal decimal 
+        return parseFloat(parseFloat(result).toPrecision(lengthDecimal));
+
     }
 }
 
