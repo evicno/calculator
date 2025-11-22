@@ -5,62 +5,61 @@ let num1 = "0";
 let operator = "";
 let num2 = "0";
 let operationOver = false;
+let result = 0;
 
 // Create arrays with all operators and numbers buttons
 //const operators = Array.from(document.querySelectorAll(".operator"));
 //const numbers = Array.from(document.querySelectorAll(".number"));
 
-// Case the button clicked is an operator
-function clickOperator(op) {
-    let result = 0;
-    switch (op) {
+function operate(num1, num2, operator) {
+    switch (operator) {
         case "add":
-            topDisplay.textContent += "+";
-            operator = op;
+            result = (Number(num1) + Number(num2));
             break;
         case "sub":
-            topDisplay.textContent += "-";
-            operator = op;
+            result = (Number(num1) - Number(num2));
             break;
         case "mult":
-            topDisplay.textContent += "x";
-            operator = op;
+            result = (Number(num1) * Number(num2));
             break;
         case "div":
-            topDisplay.textContent += "/";
-            operator = op;
+            result = (Number(num1) / Number(num2));
             break;
-        case "equal":
-            switch (operator) {
-                case "add":
-                    result = (Number(num1) + Number(num2));
-                    break;
-                case "sub":
-                    result = (Number(num1) - Number(num2));
-                    break;
-                case "mult":
-                    result = (Number(num1) * Number(num2));
-                    break;
-                case "div":
-                    result = (Number(num1) / Number(num2));
-                    break;
-            };
-        bottomDisplay.textContent = result.toFixed(8);
+    }
+    return result;
+}
+
+// Case the button clicked is an operator
+function clickOperator(op) {
+    if (op == "equal"){
+        result = operate(num1, num2, operator);
+        bottomDisplay.textContent = result;
         num1 = "0";
         num2 = "0";
         operator = "";
         operationOver = true;
     }
-
+    else {
+        if (result != 0) { // an operation just occured, we want to use the result as num1
+            num1 = result;
+            operator = op;
+            addOperatorDisplay(op);
+        }
+        else { //
+            addOperatorDisplay(op);
+            operator = op;
+        }  
+    }
 }
 
 // Case the button clicked is a number (uses newOperation to decide if the number
 // should be added to num1 or num2)
 function clickNumber(num) {
     if (operator == "") { //first number of operation
-        if (operationOver && num1 == "0") { //Clears the top display for new operation
+        if (operationOver && num1 == "0") { //Clears the display for new operation
+            bottomDisplay.textContent = "0";
             if (num == ".") {
-                topDisplay.textContent = "0"
+                topDisplay.textContent = "0";
             }
             else topDisplay.textContent = ""; 
         }
@@ -69,7 +68,6 @@ function clickNumber(num) {
             topDisplay.textContent = "0"; // avoid 0 to be erased
         }
         num1 = addNumber(num, num1); 
-        console.log(num1);
     }
     else {
         num2 = addNumber(num, num2);
@@ -89,6 +87,23 @@ function addNumber(digit, number) {
     else {
         number += digit;
         return number;
+    }
+}
+
+function addOperatorDisplay(op) {
+    switch(op) {
+        case "add":
+            topDisplay.textContent += "+";
+            break;
+        case "sub":
+            topDisplay.textContent += "-";
+            break;
+        case "mult":
+            topDisplay.textContent += "x";
+            break;
+        case "div":
+            topDisplay.textContent += "/";
+            break;
     }
 }
 
