@@ -33,12 +33,17 @@ function operate(num1, num2, operator) {
 // Case the button clicked is an operator
 function clickOperator(op) {
     if (op == "equal"){
-        result = operate(num1, num2, operator);
-        bottomDisplay.textContent = result;
-        num1 = "";
-        num2 = "";
-        operator = "";
-        operationOver = true;
+        if (num1 == "" || operator == "" || num2 == "") {
+            return;
+        }
+        else {
+            result = operate(num1, num2, operator);
+            bottomDisplay.textContent = result.toString().slice(0, 10);
+            num1 = "";
+            num2 = "";
+            operator = "";
+            operationOver = true;
+        }
     }
     else {
         console.log(num1, num2, operator, result);
@@ -50,7 +55,7 @@ function clickOperator(op) {
         else if (operator != "") { // i
             
             result = operate(num1, num2, operator);
-            bottomDisplay.textContent = result;
+            bottomDisplay.textContent = result.toString().slice(0, 10);
             num1 = result;
             num2 = "";
             operator = op;
