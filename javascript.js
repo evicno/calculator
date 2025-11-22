@@ -11,22 +11,23 @@ let num2 = "0";
 
 // Case the button clicked is an operator
 function clickOperator(op) {
+    let result = 0;
     if (op == "equal") {
         switch (operator) {
             case "add":
-                console.log(Number(num1) + Number(num2));
-
+                result = (Number(num1) + Number(num2));
                 break;
             case "sub":
-                console.log(Number(num1) - Number(num2));
+                result = (Number(num1) - Number(num2));
                 break;
             case "mult":
-                console.log(Number(num1) * Number(num2));
+                result = (Number(num1) * Number(num2));
                 break;
             case "div":
-                console.log(Number(num1) / Number(num2));
+                result = (Number(num1) / Number(num2));
                 break;
         }
+        bottomDisplay.textContent = result;
         num1 = "0";
         num2 = "0";
         operator = "";
@@ -58,6 +59,7 @@ function addNumber(digit, number) {
     }
 }
 
+const bottomDisplay = document.querySelector("#bottom");
 const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
