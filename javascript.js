@@ -47,14 +47,18 @@ function clickOperator(op) {
         }
     }
     else {
-        console.log(num1, num2, operator, result);
         if (result != 0) { // an operation just occured, we want to use the result as num1
             num1 = result;
             operator = op;
             addOperatorDisplay(op, "bottom");
         }
-        else if (operator != "") { // i
-            
+        else if (operator != "") { // add a new operation (without =)
+            let last = lastButton[lastButton.length - 1];
+            if (last == "operator") {
+                clickClear("c");
+                clickOperator(op);
+                return;
+            }
             result = operate(num1, num2, operator);
             topDisplay.textContent = bottomDisplay.textContent;
             bottomDisplay.textContent = roundResultForDisplay(result);
