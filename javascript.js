@@ -7,12 +7,34 @@ let num2 = 0;
 //const operators = Array.from(document.querySelectorAll(".operator"));
 //const numbers = Array.from(document.querySelectorAll(".number"));
 
+function clickOperator(op) {
+    if (op == "equal") {
+        console.log("equal");
+        switch (operator) {
+            case "add":
+                console.log(num1 + num2);
+                break;
+            case "sub":
+                console.log(num1 - num2);
+                break;
+            case "mult":
+                console.log(num1 * num2);
+                break;
+            case "div":
+                console.log(num1 / num2);
+                break;
+        }
+    }
+    else operator = op;
+
+}
 
 const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
         if (button.className == "operator") {
-            operator = button.id;
+            console.log(button.id);
+            clickOperator(button.id);
         }
         else if (button.className == "number") {
             num1 = Number(button.id);
