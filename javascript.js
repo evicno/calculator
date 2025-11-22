@@ -75,29 +75,34 @@ console.log(num1, num2, operator, result);
 // Case the button clicked is a number (uses newOperation to decide if the number
 // should be added to num1 or num2)
 function clickNumber(num) {
+    console.log(bottomDisplay);
+    if (num == "point") { //allow to handle point like a number
+        num = ".";
+    }
     if (operator == "") { //first number of operation
         result = 0;
-        if (operationOver && num1 == "") { //Clears the display for new operation
-            //if (num == ".") {
-            //    bottomDisplay.textContent = "0";
-            //}
-            //else bottomDisplay.textContent = ""; 
+        if (num1 == "" && num == ".") { // add a 0 before the .
+            num1 = "0.";
+            bottomDisplay.textContent = "0.";
         }
-        if (num == "point") { //case of first button of first op is "."
-            num = ".";
-            //bottomDisplay.textContent = "0"; // avoid 0 to be erased
+        else {
+        num1 = addNumber(num, num1);
+        bottomDisplay.textContent = num1; 
         }
-        num1 = addNumber(num, num1); 
         lastButton.push("num1");
     }
     else {
-        num2 = addNumber(num, num2);
-        lastButton.push("num2");
+        if (num2 == "" && num == ".") {
+            console.log(1);
+            num2 = "0."
+            bottomDisplay.textContent += "0.";
+        }
+        else {
+            num2 = addNumber(num, num2);
+            bottomDisplay.textContent += num;
+        }
+    lastButton.push("num2");
     }
-    if (bottomDisplay.textContent == "0") {
-        bottomDisplay.textContent = num;
-    }
-    else bottomDisplay.textContent += num;
 }
 
 // Add the digit clicked to the number: replaces number by digit if number = 0,
