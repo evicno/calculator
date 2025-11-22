@@ -45,7 +45,7 @@ function clickOperator(op) {
                     result = (Number(num1) / Number(num2));
                     break;
             };
-        bottomDisplay.textContent = result;
+        bottomDisplay.textContent = result.toFixed(8);
         num1 = "0";
         num2 = "0";
         operator = "";
@@ -57,11 +57,19 @@ function clickOperator(op) {
 // Case the button clicked is a number (uses newOperation to decide if the number
 // should be added to num1 or num2)
 function clickNumber(num) {
-    if (operator == "") { 
+    if (operator == "") { //first number of operation
         if (operationOver && num1 == "0") { //Clears the top display for new operation
-            topDisplay.textContent = ""; 
+            if (num == ".") {
+                topDisplay.textContent = "0"
+            }
+            else topDisplay.textContent = ""; 
+        }
+        if (num == "point") { //case of first button of first op is "."
+            num = ".";
+            topDisplay.textContent = "0"; // avoid 0 to be erased
         }
         num1 = addNumber(num, num1); 
+        console.log(num1);
     }
     else {
         num2 = addNumber(num, num2);
@@ -73,7 +81,10 @@ function clickNumber(num) {
 // else concatenates the digit to number.
 function addNumber(digit, number) {
     if (number == "0") {
-        return digit;
+        if (digit == ".") {
+            return "0."
+        }
+        else return digit;
     }
     else {
         number += digit;
