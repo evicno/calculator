@@ -6,6 +6,7 @@ let operator = "";
 let num2 = "0";
 let operationOver = false;
 let result = 0;
+let lastButton = ""
 
 // Create arrays with all operators and numbers buttons
 //const operators = Array.from(document.querySelectorAll(".operator"));
@@ -48,7 +49,8 @@ function clickOperator(op) {
         else { //
             addOperatorDisplay(op);
             operator = op;
-        }  
+        }
+        lastButton = "operator";
     }
 }
 
@@ -68,9 +70,11 @@ function clickNumber(num) {
             topDisplay.textContent = "0"; // avoid 0 to be erased
         }
         num1 = addNumber(num, num1); 
+        lastButton = "num1";
     }
     else {
         num2 = addNumber(num, num2);
+        lastButton = "num2";
     }
     topDisplay.textContent += num;
 }
@@ -87,6 +91,33 @@ function addNumber(digit, number) {
     else {
         number += digit;
         return number;
+    }
+}
+
+function clickClear(id) {
+    if (id == "ac") {
+        num1 = 0;
+        num2 = 0;
+        operator = "";
+        result = "";
+        lastButton = "";
+        operationOver = false;
+        topDisplay.textContent = "";
+        bottomDisplay.textContent = 0;
+    }
+    if (id == "c") {
+        topDisplay.textContent = topDisplay.textContent.slice(0, topDisplay.textContent.length - 1);
+        switch (lastButton) {
+            case ("num1"):
+                num1 = num1.slice(0, num1.length -1);               
+                break;
+            case ("num2"):
+                num2 = num2.slice(0, num2.length - 1);
+                break;
+            case ("operator"):
+                operator = "";
+            }
+
     }
 }
 
@@ -117,6 +148,9 @@ buttons.forEach((button) => {
         }
         else if (button.className == "number") {
             clickNumber(button.id);
+        }
+        else if (button.className == "clear") {
+            clickClear(button.id);
         }
     })
 })

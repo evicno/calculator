@@ -9,7 +9,7 @@ body {
 }
 .container {
     width: 364px;
-    height: 480px;
+    height: 560px;
     margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
@@ -35,7 +35,7 @@ button {
 }
 
 .buttons {
-    height: 350px;
+    height: 430px;
     margin: 10px;
     padding: 5px;
     padding-top: 16px;
@@ -70,4 +70,12 @@ button {
 #top {
     height: 20px;
     font-size: 20px;
+}
+
+.clear {
+    flex: 1;
+}
+
+#ac {
+    background-color: rgb(180, 91, 91);
 }
