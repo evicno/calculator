@@ -48,18 +48,23 @@ function clickOperator(op) {
         }
     }
     else {
+        console.log(num1, num2, operator, result);
         if (result != 0) { // an operation just occured, we want to use the result as num1
             num1 = result;
             operator = op;
+            console.log(num1, num2, operator, result);
             addOperatorDisplay(op, "bottom");
         }
-        else if (operator != "") { // add a new operation (without =)
+        if (operator != "") { // add a new operation (without =)
+            console.log(num1, num2, operator, result);
             let last = lastButton[lastButton.length - 1];
             if (last == "operator") {
+                console.log(num1, num2, operator, result);
                 clickClear("c");
                 clickOperator(op);
                 return;
             }
+            console.log(num1, num2, operator, result);
             result = operate(num1, num2, operator);
             topDisplay.textContent = bottomDisplay.textContent;
             bottomDisplay.textContent = roundResultForDisplay(result);
@@ -98,7 +103,7 @@ function clickNumber(num) {
     }
     else { // num2 is being entered
         // case of div by 0
-        if (num2 == "" && num =="0") {
+        if (num2 == "" && num == "0") {
             topDisplay.textContent = "";
             bottomDisplay.textContent = "Error (div by 0)";
             num1 = "";
