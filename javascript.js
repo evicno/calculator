@@ -32,6 +32,7 @@ function operate(num1, num2, operator) {
 
 // Case the button clicked is an operator
 function clickOperator(op) {
+    point.disabled = false;
     if (op == "equal"){
         if (num1 == "" || operator == "" || num2 == "") {
             return;
@@ -72,19 +73,19 @@ function clickOperator(op) {
             operator = op;
         }
         lastButton.push("operator");
-    }
-console.log(num1, num2, operator, result);    
+    }   
 }
 
 // Case the button clicked is a number (uses newOperation to decide if the number
 // should be added to num1 or num2)
 function clickNumber(num) {
-    console.log(bottomDisplay);
     if (num == "point") { //allow to handle point like a number
         num = ".";
+        point.disabled = true;
     }
     if (operator == "") { //first number of operation
         result = 0;
+        topDisplay.textContent = "";
         if (num1 == "" && num == ".") { // add a 0 before the .
             num1 = "0.";
             bottomDisplay.textContent = "0.";
@@ -221,6 +222,7 @@ function roundResultForDisplay(result) {
 const bottomDisplay = document.querySelector("#bottom");
 const topDisplay = document.querySelector("#top");
 const buttons = document.querySelectorAll("button");
+const point = document.querySelector("#point");
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
         if (button.className == "operator") {

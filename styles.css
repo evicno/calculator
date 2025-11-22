@@ -51,6 +51,11 @@ button {
     background-color: #A3B087;
 }
 
+button:disabled {
+    background-color: #A3B087;
+    color: black;
+    border-color: black; 
+}
 .row {
     display: flex;
     justify-content: center;
@@ -59,6 +64,7 @@ button {
 .display {
     height: 25px;
     margin: 0;
+    
     
 }
 
