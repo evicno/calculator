@@ -91,17 +91,30 @@ function clickNumber(num) {
         }
         lastButton.push("num1");
     }
-    else {
-        if (num2 == "" && num == ".") {
-            console.log(1);
-            num2 = "0."
-            bottomDisplay.textContent += "0.";
+    else { // num2 is being entered
+        // case of div by 0
+        if (num2 == "" && num =="0") {
+            topDisplay.textContent = "";
+            bottomDisplay.textContent = "Error (div by 0)";
+            num1 = "";
+            num2 = "";
+            operator = "";
+            result = 0;
+            lastButton = [];
+            operationOver = false;
         }
         else {
-            num2 = addNumber(num, num2);
-            bottomDisplay.textContent += num;
+            if (num2 == "" && num == ".") {
+                console.log(1);
+                num2 = "0."
+                bottomDisplay.textContent += "0.";
+            }
+            else {
+                num2 = addNumber(num, num2);
+                bottomDisplay.textContent += num;
+            }
+        lastButton.push("num2");
         }
-    lastButton.push("num2");
     }
 }
 
@@ -122,8 +135,8 @@ function addNumber(digit, number) {
 
 function clickClear(id) {
     if (id == "ac") {
-        num1 = 0;
-        num2 = 0;
+        num1 = "";
+        num2 = "";
         operator = "";
         result = "";
         lastButton = "";
@@ -133,7 +146,7 @@ function clickClear(id) {
         bottomDisplay.textContent = 0;
     }
     if (id == "c") {
-        topDisplay.textContent = topDisplay.textContent.slice(0, topDisplay.textContent.length - 1);
+        bottomDisplay.textContent = bottomDisplay.textContent.slice(0, bottomDisplay.textContent.length - 1);
         let last = lastButton.pop();
         switch (last) {
             case ("num1"):
