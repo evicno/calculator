@@ -42,7 +42,6 @@ function clickEqual () {
         topDisplay.textContent = bottomDisplay.textContent;
         bottomDisplay.textContent = roundResultForDisplay(result);
     }
-    console.log(num1, num2, operator, result);
 }
 
 // Case the button clicked is an operator
@@ -53,7 +52,6 @@ function clickOperator(op) {
     if (last == "operator") {
         lastButton.pop();
         clickOperator(op);
-        console.log(num1, num2, operator, result);
         return;
     }
     if (result != "") { // an operation just finished, we want to use the result as num1
@@ -61,7 +59,6 @@ function clickOperator(op) {
         result = "";
         operator = op; 
         addOperatorDisplay(op, "bottom");
-        console.log(num1, num2, operator, result);
         }
     else if (operator != "") { // add a new operation (without =) 
         num1 = operate(num1, num2, operator);
@@ -70,15 +67,12 @@ function clickOperator(op) {
         num2 = "";
         operator = op;
         addOperatorDisplay(op, "bottom");
-        console.log(num1, num2, operator, result);
     }
     else { // only num1 has been entered yet
             addOperatorDisplay(op, "bottom");
             operator = op;
-            console.log(num1, num2, operator, result);
         }
     lastButton.push("operator");
-    console.log(num1, num2, operator, result);
 }   
 
 
@@ -121,7 +115,6 @@ function clickNumber(num) {
         lastButton.push("num2");
         }
     }
-    console.log(num1, num2, operator, result);
 }
 
 // Add the digit clicked to the number: replaces number by digit if number = 0,
@@ -240,4 +233,3 @@ buttons.forEach((button) => {
         }
     })
 })
-
