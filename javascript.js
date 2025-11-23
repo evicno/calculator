@@ -7,9 +7,6 @@ let num2 = "";
 let result = ""; // result only changes after = being entered
 let lastButton = [];
 
-// Create arrays with all operators and numbers buttons
-//const operators = Array.from(document.querySelectorAll(".operator"));
-//const numbers = Array.from(document.querySelectorAll(".number"));
 
 function operate(num1, num2, operator) {
     switch (operator) {
@@ -28,6 +25,7 @@ function operate(num1, num2, operator) {
     }
     return result;
 }
+
 // Process the = button being clicked.
 // Ignores it if 2 numbers and one operator have not been entered.
 function clickEqual () {
@@ -41,7 +39,8 @@ function clickEqual () {
         num2 = "";
         operator = "";
         lastButton = [];
-
+        topDisplay.textContent = bottomDisplay.textContent;
+        bottomDisplay.textContent = roundResultForDisplay(result);
     }
     console.log(num1, num2, operator, result);
 }
@@ -50,36 +49,33 @@ function clickEqual () {
 function clickOperator(op) {
     point.disabled = false;
     let last = lastButton[lastButton.length - 1];
-    // If op is a second consecutive operator entered, erase the first one and
-    // start over with the new one.
+    // If op is a second consecutive operator entered, replace the first one.
     if (last == "operator") {
-        operator = op;
+        lastButton.pop();
+        clickOperator(op);
+        console.log(num1, num2, operator, result);
+        return;
     }
-    //        topDisplay.textContent = bottomDisplay.textContent;
-     //       bottomDisplay.textContent = roundResultForDisplay(result);
-    if (result != 0) { // an operation just finished, we want to use the result as num1
+    if (result != "") { // an operation just finished, we want to use the result as num1
         num1 = result;
         result = "";
         operator = op; 
-        //   topDisplay.textContent = bottomDisplay.textContent;
-         //   addOperatorDisplay(op, "bottom");
-            //result = operate(num1, num2, operator);
-
-           // bottomDisplay.textContent = roundResultForDisplay(result);
-           // addOperatorDisplay(op, "bottom");
+        addOperatorDisplay(op, "bottom");
+        console.log(num1, num2, operator, result);
         }
-    else if (operator != "") { // add a new operation (without =)
-            //topDisplay.textContent = bottomDisplay.textContent;
-            //bottomDisplay.textContent = roundResultForDisplay(result);
+    else if (operator != "") { // add a new operation (without =) 
         num1 = operate(num1, num2, operator);
+        topDisplay.textContent = bottomDisplay.textContent;
+        bottomDisplay.textContent = roundResultForDisplay(num1);
         num2 = "";
         operator = op;
-            //addOperatorDisplay(op, "bottom");
-            //console.log(num1, num2, operator, result);
+        addOperatorDisplay(op, "bottom");
+        console.log(num1, num2, operator, result);
     }
     else { // only num1 has been entered yet
-            //addOperatorDisplay(op, "bottom");
+            addOperatorDisplay(op, "bottom");
             operator = op;
+            console.log(num1, num2, operator, result);
         }
     lastButton.push("operator");
     console.log(num1, num2, operator, result);
@@ -90,37 +86,37 @@ function clickOperator(op) {
 // should be added to num1 or num2)
 function clickNumber(num) {
     if (num == "point") { //allow to handle point like a number
-        num = "0.";
+        num = ".";
         point.disabled = true;
     }
     if (operator == "") { //first number of operation
         result = "";
-        //topDisplay.textContent = "";
+        topDisplay.textContent = "";
         if (num1 == "" && num == ".") { // add a 0 before the .
-            //num1 = "0.";
-            //bottomDisplay.textContent = "0.";
+            num1 = "0.";
+            bottomDisplay.textContent = "0.";
         }
         else {
         num1 = addNumber(num, num1);
-        // bottomDisplay.textContent = num1; 
+        bottomDisplay.textContent = num1; 
         }
         lastButton.push("num1");
     }
     else { // num2 is being entered
         // case of div by 0
         if (num2 == "" && num == "0") {
-            //topDisplay.textContent = "";
-            //bottomDisplay.textContent = "Error (div by 0)";
+            topDisplay.textContent = "";
+            bottomDisplay.textContent = "Error (div by 0)";
             clearAllVariables();
         }
         else {
             if (num2 == "" && num == ".") {
-                //num2 = "0."
+                num2 = "0."
                 bottomDisplay.textContent += "0.";
             }
             else {
                 num2 = addNumber(num, num2);
-                //bottomDisplay.textContent += num;
+                bottomDisplay.textContent += num;
             }
         lastButton.push("num2");
         }
@@ -150,11 +146,11 @@ function clearAllVariables () {
 function clickClear(id) {
     if (id == "ac") {
         clearAllVariables();
-        //topDisplay.textContent = "";
-        //bottomDisplay.textContent = 0;
+        topDisplay.textContent = "";
+        bottomDisplay.textContent = 0;
     }
     if (id == "c") {
-        //bottomDisplay.textContent = bottomDisplay.textContent.slice(0, bottomDisplay.textContent.length - 1);
+        bottomDisplay.textContent = bottomDisplay.textContent.slice(0, bottomDisplay.textContent.length - 1);
         let last = lastButton.pop();
         switch (last) {
             case ("num1"):
@@ -170,7 +166,7 @@ function clickClear(id) {
     }
 }
 
-function addElementToDisplay(element, display) {
+function addOperatorDisplay(op, display) {
     if (display == "top"){
         switch(op) {
             case "add":
